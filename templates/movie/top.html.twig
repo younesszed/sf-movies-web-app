@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5 text-center">
+        <h1>Les Meilleurs Films de tous les Temps</h1>
+
+        <div class="row mt-4 mb-5">
+            {% for top in tops.results %}
+
+                <div class="col-sm-3 d-flex col-lg-3 col-md-6 d-flex">
+                    <div class="card border-dark h-150 mt-3">
+                        <img class="card-img-top" src="http://image.tmdb.org/t/p/original{{ top.poster_path }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ top.title }}</h4>
+                            <h6>{{ top.release_date|date("d/m/Y") }}</h6>
+                            <h5 class="rating">Note : {{ top.vote_average }}/10</h5>
+                            <p class="card-text">{{ top.overview | slice(0,100)}}...</p>
+                        </div>
+                        <a href="{{ path('movie_details', {'id': top.id } ) }}" class="btn btn-primary">Lire la suite</a>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+framework:
+    http_client:
+        scoped_clients:
+            tmdbapi.client:
+                base_uri: '%env(TMDB_API_URL)%'
+
+                # HTTP Bearer authentication (also called token authentication)
+                auth_bearer: '%env(TMDB_API_TOKEN)%'

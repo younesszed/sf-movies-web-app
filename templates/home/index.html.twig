@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+{% block body %}
+    <div class="container ">
+        <div class="col-sm-3 col-lg-12 col-md-6 d-flex align-content-center">
+            <h1>We movies </h1>
+        </div>
+        <div class="col-sm-3 col-lg-12 col-md-6 d-flex">
+            {% if  latest.youtube.0.source is defined %}
+                <iframe width="1280" height="720"
+                        src="https://www.youtube.com/embed/{{ latest.youtube.0.source }}" allowfullscreen>
+                </iframe>
+            {% else %}
+                <img class="card-img-top" src="http://image.tmdb.org/t/p/original{{ movie.poster_path }}"
+                     alt="">
+            {% endif %}
+        </div>
+        <div class="float-left col-3">
+            <div class="card col-auto" style="margin-left: 10px;">
+                {% for key, gender in genders.genres %}
+                    <label class="col-9"  for="gender-{{ key }}">
+                        <input type="checkbox" name="gender-{{ key }}" id="gender-{{ key }}" value="{{ gender.id }}" class="form-check-input" />{{ gender.name }}
+                    </label>
+                {% endfor %}
+            </div>
+
+        </div>
+        {% for key, movie in movies.results %}
+        {%- if key > 0 -%}
+        <div class="card col-9 float-right">
+            <div class="row no-gutters">
+                <div class="col-3 float-left">
+                    <img class="col-12"  alt="{{ movie.title }}"src="http://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="">
+                </div>
+                <div class="col col-9 float-right">
+                    <div class="card-block">
+                        <h4 class="card-title">{{ movie.title }}</h4>
+                        <h6 class="card-text">{{ movie.release_date | date("Y") }}</h6>
+                        <p class="card-text">{{ movie.overview | slice(0,200) }}...</p>
+                        <h5 class="rating">Note : {{ movie.vote_average }}/10</h5>
+
+                        <a href="{{ path('movie_details', {'id': movie.id } ) }}"
+                           class="btn btn-primary col-3 float-right">Lire la
+                            suite</a>
+                    </div>
+                    {# <a href="{{ path('lists', {'movie_id': upcome.id } ) }}" class="btn btn-primary">Lire la
+                            suite</a> #}
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <br>
+{% endblock %}
