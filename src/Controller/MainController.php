@@ -72,10 +72,13 @@ class MainController extends AbstractController
             return $this->render('movies_list/no_match.html.twig');
         } else {
 
+            $genders = $this->client->getGenders();
             $searchByTitle = $this->client->searchMovies($search);
 
-            return $this->render('movie/search.html.twig', [
-                'bytitles' => $searchByTitle["results"],
+            return $this->render('home/index.html.twig', [
+                'latest' => [],
+                'genders'   => $genders,
+                'movies' => $searchByTitle,
             ]);
         }
     }
