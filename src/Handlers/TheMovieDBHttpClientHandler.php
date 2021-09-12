@@ -47,11 +47,6 @@ class TheMovieDBHttpClientHandler
         return $this->call('genre/' . $genre_id . '/movies', $parameters, $headers);
     }
 
-    public function getNowPlaying(array $parameters = [], array $headers = [])
-    {
-        return $this->call('movie/now_playing', $parameters, $headers);
-    }
-
     public function searchMovies($query, array $parameters = [], array $headers = [])
     {
         return $this->call('search/movie', array_merge($parameters, [

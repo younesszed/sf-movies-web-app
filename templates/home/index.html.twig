@@ -5,25 +5,28 @@
         <div class="col-sm-3 col-lg-12 col-md-6 d-flex align-content-center">
             <h1>We movies </h1>
         </div>
+        {% if latest|length > 0 %}
         <div class="col-sm-3 col-lg-12 col-md-6 d-flex">
             {% if  latest.youtube.0.source is defined %}
                 <iframe width="1280" height="720"
                         src="https://www.youtube.com/embed/{{ latest.youtube.0.source }}" allowfullscreen>
                 </iframe>
             {% else %}
-                <img class="card-img-top" src="http://image.tmdb.org/t/p/original{{ movie.poster_path }}"
+                <img class="card-img-top" src="http://image.tmdb.org/t/p/original{{ latest.poster_path }}"
                      alt="">
             {% endif %}
         </div>
+        {% endif %}
         <div class="float-left col-3">
-            <div class="card col-auto" style="margin-left: 10px;">
+            <div class="card col-auto genre-checkboxes" style="margin-left: 10px;">
+                <form action="{{ path('genre-movie-list') }}" method="post">
                 {% for key, gender in genders.genres %}
                     <label class="col-9"  for="gender-{{ key }}">
-                        <input type="checkbox" name="gender-{{ key }}" id="gender-{{ key }}" value="{{ gender.id }}" class="form-check-input" />{{ gender.name }}
+                        <input type="checkbox" name="gender" id="gender-{{ key }}" value="{{ gender.id }}" class="form-check-input genre-check" />{{ gender.name }}
                     </label>
                 {% endfor %}
+                <form/>
             </div>
-
         </div>
         {% for key, movie in movies.results %}
         {%- if key > 0 -%}

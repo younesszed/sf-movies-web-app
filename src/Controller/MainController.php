@@ -42,6 +42,27 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/genre/movie", name="genre-movie-list")
+     */
+    public function genreMoviesList(Request $request ) : Response
+    {
+        $ids_genre = $request->request->get('gender');
+        $ids_genre = is_array($ids_genre) ? $ids_genre : [$ids_genre];
+
+        $movies['results'] = array_merge(... array_column(array_map(function ($id){
+            return $this->client->getGenderMovies($id);
+        }, $ids_genre), 'results'));
+
+        $genders = $this->client->getGenders();
+
+        return $this->render('home/index.html.twig', [
+            'latest' => [],
+            'genders'   => $genders,
+            'movies' => $movies,
+        ]);
+    }
+
+    /**
      * @Route("/search",name="search")
      */
     public function search(Request $request): Response
@@ -57,7 +78,6 @@ class MainController extends AbstractController
                 'bytitles' => $searchByTitle["results"],
             ]);
         }
-
     }
 
     /**

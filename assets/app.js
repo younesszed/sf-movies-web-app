@@ -14,9 +14,8 @@ import './bootstrap';
 import $ from 'jquery';
 
 $(document).ready(function() {
-// initialize with defaults
-  $("#rating-note").rating();
-
-// with plugin options
-  $("#rating-note").rating({min: 1, max: 5, size: 'lg'});
+  $('.genre-check').change(function() {
+    console.log($(this).parent('form'))
+   $(this).parents('form').first().submit()
+  })
 });
